@@ -1,0 +1,47 @@
+{
+	"name": "Character Tools Free",
+	"description": "Enables your users to use blizzlike character tools.",
+	"version": "1.0.0",
+	"date": "2024-10-03",
+	"author": {
+		"name": "Shayan",
+		"website": "fusioncms.ir"
+	},
+	
+	"permissions": {
+		"view": {"default" : true, "description": "View the character tools screen." },
+        "canViewAdmin": {"default" : false, "description": "View can View Admin Services the admin page" },
+		"canAddItems": {"default" : false, "description": "View can Add Services the admin page" }
+	},
+
+	"roles": {
+		"manage": {
+			"description": "Module management <font style='color:red;'>Management tools</font>",
+			"dangerLevel": 2,
+
+			"permissions": {
+				"canViewAdmin": true,
+				"canAddItems" : true,
+				"canAdd": true,
+				"canRemove": true,
+				"canEdit": true
+			}
+		}
+	},
+    "admin": [
+		{
+			"text": "Character Tools",
+			"icon": "share",
+			"links": [
+				{
+					"text": "Services",
+					"icon": "users",
+					"controller": "admin",
+					"requirePermission": "canAddItems"
+				}
+			]
+		}
+	],
+
+	"enabled": true
+}
