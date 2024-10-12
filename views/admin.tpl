@@ -25,7 +25,7 @@
                     {foreach from=$configs item=config}
                     <tr>
                         <td>  {$config.id}</td>
-                        <td>  {lang({$config.name}, "Character_tools")}  </td>
+                        <td>  {lang({$config.name}, "character_tools")}  </td>
                         <td>
 
                             {if $config.amount == '0'}
