@@ -18,32 +18,9 @@ class character_tools extends MX_Controller
         $this->user->userArea();
         $this->load->model("data_model");
 
-        $this->init();
+       
     }
-    private function init()
-    {
-        $this->characters = $this->user->getCharacters($this->user->getId());
-        foreach($this->characters as $realm_key => $realm)
-        {
-            if(is_array($realm['characters']))
-            {
-                foreach($realm['characters'] as $character_key => $character)
-                {
-                    $this->characters[$realm_key]['characters'][$character_key]['avatar'] = $this->realms->formatAvatarPath($character);
-                }
-            }
-
-        }
-        $this->total = 0;
-        foreach($this->characters as $realm)
-        {
-            if($realm['characters'])
-            {
-                $this->total += count($realm['characters']);
-            }
-        }
-
-    }
+    
     public function index()
     {
         requirePermission("view");
@@ -56,7 +33,7 @@ class character_tools extends MX_Controller
         $this->template->setTitle("Character Tools");
 
         $content_data = array(
-            "characters" => $this->characters,
+            "realms" => $this->realms->getRealms(),
             "url" => $this->template->page_url,
             "total" => $this->total,
             "dp" => $this->user->getDp(),

@@ -3,8 +3,6 @@
 class data_model extends CI_Model
 {
 
-
-
     public function save($id, $data)
     {
         $this->db->table('character_tools_free')->where('id', $id)->update($data);
@@ -133,6 +131,47 @@ class data_model extends CI_Model
 
         return true;
 
+    }
+    
+    public function GetCountAccount($realmId = 1)
+  {
+     
+    
+    $character_database = $this->realms->getRealm($realmId)->getCharacters();
+    $character_database->connect();
+   
+    $query = $character_database->getConnection()->query( "SELECT COUNT(*) AS total FROM  characters WHERE account= ? ", [$this->user->getId()]
+    );
+
+    if ($query && $query->getNumRows() > 0)
+    {
+      $results = $query->getResultArray();
+      
+      return (int)$results[0]['total'];
+    }
+    
+    return 0;
+  }
+
+    public function getAccChar($realmId = 1)
+    {
+
+        $sell_MIX = $this->config->item('maxLevel');
+        $sell_MIN = $this->config->item('minLevel');
+
+        // دریافت دیتابیس مربوط به realm
+        $character_database = $this->realms->getRealm($realmId)->getCharacters();
+        $character_database->connect();
+
+        // استفاده از بایند کردن پارامترها برای جلوگیری از SQL Injection
+        $query = $character_database->getConnection()->query( "SELECT guid, race, gender, class, level, account, name  FROM characters  WHERE account = ? ",[$this->user->getId()]
+        );
+
+        // بررسی تعداد رکوردهای برگشتی
+        if ($query->getNumRows() > 0)
+            return $query->getResultArray();
+        else
+            return false ;
     }
 
 

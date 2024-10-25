@@ -1,19 +1,18 @@
 <section id="character_tools">
     <section id="select_character">
-        {if $total}
-            {foreach from=$characters item=realm}
+         {foreach from=$realms item=realm}
+          {if $this->data_model->GetCountAccount($realm->getId())}
                 <table class="nice_table mb-3" style="text-align: center">
                     <thead>
                     <tr>
                         <div>
                             <div>
-                                    <p class="realm_active">     {$realm.realmName} </p>
-
+                                    <p class="realm_active">   {$realm->getName()} </p>
                             </div>
                         </div>
                     </tr>
                     </thead>
-                    {foreach from=$realm.characters item=character}
+                    {foreach from=$this->data_model->getAccChar($realm->getId()) item=character}
                         <tr>
                             <td class="col-0">
                                 <img src="{$url}application/images/stats/{$character.race}-{$character.gender}.gif">
@@ -27,7 +26,7 @@
                                 <div class="select_character">
                                     <div class="character store_item">
                                         <section class="character_buttons">
-                                            <a href="javascript:void(0)" class="nice_button" onClick="CharacterTools.selectCharacter(this, {$realm.realmId}, {$character.guid}, '{$character.name}')">
+                                            <a href="javascript:void(0)" class="nice_button" onClick="CharacterTools.selectCharacter(this, {$realm->getId()}, {$character.guid}, '{$character.name}')">
                                                 Select
                                             </a>
                                         </section>
@@ -37,15 +36,15 @@
                         </tr>
                     {/foreach}
                 </table>
-
-            {/foreach}
         {else}
             <center style="padding-top:10px;"><b>no found character</b></center>
         {/if}
+            {/foreach}
+      
     </section>
     <table class="nice_table"  id="show"  style="text-align: center;">
         {foreach from=$configs key=key item=config}
-            {if  $config.id == 0  }
+            {if $config.id == 0 }
                 <tr>
             {/if}
             {if $config.active}
