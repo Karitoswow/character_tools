@@ -1,7 +1,7 @@
 <section id="character_tools">
     <section id="select_character">
          {foreach from=$realms item=realm}
-          {if $this->data_model->GetCountAccount($realm->getId())}
+         
                 <table class="nice_table mb-3" style="text-align: center">
                     <thead>
                     <tr>
@@ -12,7 +12,8 @@
                         </div>
                     </tr>
                     </thead>
-                    {foreach from=$this->data_model->getAccChar($realm->getId()) item=character}
+                     {if $this->data_model->GetCountAccount($realm->getId())}
+                        {foreach from=$this->data_model->getAccChar($realm->getId()) item=character}
                         <tr>
                             <td class="col-0">
                                 <img src="{$url}application/images/stats/{$character.race}-{$character.gender}.gif">
@@ -34,13 +35,12 @@
                                 </div>
                             </td>
                         </tr>
-                    {/foreach}
+                       {/foreach}
+                     {else}
+                         <center style="padding-top:10px;"><b>no found character</b></center>
+                    {/if}
                 </table>
-        {else}
-            <center style="padding-top:10px;"><b>no found character</b></center>
-        {/if}
             {/foreach}
-      
     </section>
     <table class="nice_table"  id="show"  style="text-align: center;">
         {foreach from=$configs key=key item=config}
